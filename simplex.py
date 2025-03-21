@@ -36,6 +36,7 @@ def standard_simplex(tableau, basic, variables):
         print(f"\nIteration {iteration}:")
         print(variables)
         print(tableau)
+        print(f"basic : {basic}")
 
         pivot_col = get_pivot_col(tableau)
         if pivot_col is None:
@@ -44,7 +45,7 @@ def standard_simplex(tableau, basic, variables):
 
         pivot_row = get_pivot_row(tableau, pivot_col)
         if pivot_row is None:
-            status = "unbounded"
+            status = "Unbounded"
             break
 
         basic[pivot_row] = variables[int(pivot_col)]
@@ -53,10 +54,4 @@ def standard_simplex(tableau, basic, variables):
         tableau = pivot_tableau(tableau, pivot_row, pivot_col)
         iteration += 1
 
-    return tableau, basic, status
-
-tableau2 = np.array([
-    [2, 1, 1, 0, 0, 100],
-    [1, 2, 0, 1, 0, 150],
-    [-3, -5, 0, 0, 1, 0]
-], dtype=float)
+    return tableau, basic, variables, status
