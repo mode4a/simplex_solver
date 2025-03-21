@@ -176,14 +176,8 @@ class SimplexTableau:
 
         leaving_row = self.basic_variables.index(leaving_var)
 
-        pivot_matrix(self.tableau, entering_var, leaving_row)
-        # pivot_element = self.tableau[leaving_row, entering_var]
-        # self.tableau[leaving_row] /= pivot_element
-        #
-        # for i in range(self.tableau.shape[0]):
-        #     if i != leaving_row:
-        #         factor = self.tableau[i, entering_var]
-        #         self.tableau[i] -= factor * self.tableau[leaving_row]
+        self.tableau = pivot_matrix(self.tableau, entering_var, leaving_row)
+
         self.basic_variables[leaving_row] = entering_var
         self.non_basic_variables.remove(entering_var)
         self.non_basic_variables.append(leaving_var)
@@ -208,7 +202,7 @@ class SimplexTableau:
         for i, var in enumerate(self.basic_variables):
             solution[var] = self.tableau[i, -1].item()
 
-        objective_value = -self.tableau[self.obj_row, -1]
+        objective_value = self.tableau[self.obj_row, -1]
 
         return {'variables': solution, 'objective': objective_value}
 
