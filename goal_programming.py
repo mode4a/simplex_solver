@@ -256,10 +256,6 @@ class PreemptiveGoalProgramming:
                 return tableau[i, -1]
         return 0.0
 
-    def _fix_deviation_values(self, tableau, dev_var_indices, objective_row_idx):
-        for idx in dev_var_indices:
-            tableau[objective_row_idx, idx] = 0.0
-    
     def _extract_solution(self, tableau, basic_variables):
         solution = {}
 
