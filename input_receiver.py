@@ -2,6 +2,7 @@ import numpy as np
 from collections import Counter
 from simplex import standard_simplex
 from big_m import big_m
+from twophase import two_phase
 
 
 def count_constraint_types(constraints):
@@ -164,17 +165,14 @@ def get_solution(tableau, basic, variables):
         'decision_vars': decision_vars
     }
 
-obj = [4, 6, 3]
+obj = [2, 3, -5]
 constraints_coeff = [
-    [1, 2, 1, 8],
-    [2, 1, 3, 12],
-    [3, -1, 2, 7]
+    [1, 1, 1, 7],
+    [2, -5, 1, 10],
 ]
-constraints_type = ['<=', '=', '>=']
-unr_vars = [2]
+constraints_type = ['=', '>=']
+unr_vars = []
 problem_type = 'max'
-
-
 
 tableau, basic_variables, variables = input_processor(obj, constraints_coeff, constraints_type, unr_vars, problem_type)
 
@@ -183,8 +181,10 @@ print(tableau)
 print("Basic Variables:", basic_variables)
 print("Variables:", variables)
 
-tableau, basic_variables, variables, status = big_m(tableau, variables, basic_variables, problem_type)
-if(status == "Optimal"):
+tableau ,status = two_phase(tableau, variables, basic_variables)
+# status = two_phase(tableau, variables, basic_variables)
+
+if status == "Optimal":
     print(get_solution(tableau, basic_variables, variables))
 else:
     print(status)

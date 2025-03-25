@@ -17,11 +17,22 @@ def get_pivot_row(tableau, pivot_col):
     pivot_row = np.argmin(ratios)
     return pivot_row if ratios[pivot_row] != np.inf else None
 
+
+# def pivot_tableau(tableau, pivot_row, pivot_col):
+#     updated_tableau = np.copy(tableau)
+#     pivot_element = updated_tableau[pivot_row, pivot_col]
+#     updated_tableau[pivot_row, :] = updated_tableau[pivot_row, :] / pivot_element
+#
+#     for row in range(tableau.shape[0]):
+#         if row != pivot_row:
+#             multip = updated_tableau[row, pivot_col]
+#             updated_tableau[row, :] -= updated_tableau[pivot_row, :] * multip
+#     return updated_tableau
+
 def pivot_tableau(tableau, pivot_row, pivot_col):
-    updated_tableau = np.copy(tableau)
+    updated_tableau = tableau  # No copy, just a reference
     pivot_element = updated_tableau[pivot_row, pivot_col]
     updated_tableau[pivot_row, :] = updated_tableau[pivot_row, :] / pivot_element
-
     for row in range(tableau.shape[0]):
         if row != pivot_row:
             multip = updated_tableau[row, pivot_col]
@@ -53,4 +64,4 @@ def standard_simplex(tableau, basic, variables):
         tableau = pivot_tableau(tableau, pivot_row, pivot_col)
         iteration += 1
 
-    return tableau, basic, variables, status
+    return status
