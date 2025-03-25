@@ -14,9 +14,13 @@ def get_pivot_row(tableau, pivot_col):
     pivot_col_values = tableau[:-1, pivot_col]
     rhs_col = tableau[:-1, -1]
     ratios = np.where(pivot_col_values > TOLERANCE, rhs_col / pivot_col_values, np.inf)
-    pivot_row = np.argmin(ratios)
-    return pivot_row if ratios[pivot_row] != np.inf else None
-
+    
+    min_ratio = np.min(ratios)
+    if min_ratio == np.inf:
+        return None
+    
+    min_ratio_indices = np.where(np.abs(ratios - min_ratio) < TOLERANCE)[0]
+    return min_ratio_indices[-1]
 
 def pivot_tableau(tableau, pivot_row, pivot_col):
     updated_tableau = np.copy(tableau)
