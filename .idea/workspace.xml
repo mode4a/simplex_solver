@@ -5,15 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4c08815e-9a22-4eba-a69b-9a2437b5557d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/core/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/lp_problem.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/simplex_tableau.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/util.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/simplex.py" beforeDir="false" afterPath="$PROJECT_DIR$/simplex.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/core/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/core/lp_problem_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/core/simplex_tableau_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/goal_programming.py" beforeDir="false" afterPath="$PROJECT_DIR$/goal_programming.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,7 +35,7 @@
   "keyToString": {
     "Python.goal_programming.executor": "Run",
     "Python.gp2.executor": "Run",
-    "Python.test.executor": "Debug",
+    "Python.test.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "com.codeium.enabled": "true",
@@ -160,8 +153,13 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/goal_programming.py</url>
-          <line>251</line>
+          <line>268</line>
           <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/goal_programming.py</url>
+          <line>216</line>
+          <option name="timeStamp" value="11" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

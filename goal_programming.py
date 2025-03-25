@@ -73,21 +73,21 @@ class PreemptiveGoalProgramming:
 
         if inequality_type == InequalityType.LESS_THAN_EQUAL:
             slack_name = f"s_{name}"
-            constraint.slack_index = len(self.tableau_variables)
+            constraint.slack_variable_index = len(self.tableau_variables)
             self.tableau_variables.append(slack_name)
             self.num_slack_variables += 1
         elif inequality_type == InequalityType.GREATER_THAN_EQUAL:
             slack_name = f"s_{name}"
-            constraint.slack_index = len(self.tableau_variables)
+            constraint.slack_variable_index = len(self.tableau_variables)
             self.tableau_variables.append(slack_name)
             self.num_slack_variables += 1
 
             art_name = f"a_{name}"
-            constraint.artificial_index = len(self.tableau_variables)
+            constraint.artificial_variable_index = len(self.tableau_variables)
             self.tableau_variables.append(art_name)
             self.num_artificial_variables += 1
 
-        self.constraints.append(Constraint(name=name, coefficients=coefficients, rhs=rhs, inequality_type=inequality_type))
+        self.constraints.append(constraint)
 
     def build_tableau(self) -> np.ndarray:
         num_rows = len(self.goals) * 2 + len(self.constraints)
@@ -153,9 +153,26 @@ class PreemptiveGoalProgramming:
         tableau = self.build_tableau()
         self.print_tableau(tableau)
 
-        basic_variables = [-1] * (len(self.goals) * 2 + len(self.constraints))
+        basic_variables = [-1] * (len(self.goals) + len(self.constraints))
         priority_levels = set(goal.priority for goal in self.goals)
 
+        for i, goal in enumerate(self.goals):
+            if goal.inequality_type == InequalityType.LESS_THAN_EQUAL:
+                basic_variables[i] = goal.pos_dev_index
+            elif goal.inequality_type == InequalityType.GREATER_THAN_EQUAL:
+                basic_variables[i] = goal.neg_dev_index
+            else:
+                basic_variables[i] = goal.neg_dev_index
+            
+        for i, constraint in enumerate(self.constraints):
+            row_idx = len(self.goals) + i
+            if constraint.inequality_type == InequalityType.LESS_THAN_EQUAL:
+                basic_variables[row_idx] = constraint.slack_variable_index
+            elif constraint.inequality_type == InequalityType.GREATER_THAN_EQUAL:
+                basic_variables[row_idx] = constraint.artificial_variable_index
+            else:
+                basic_variables[row_idx] = constraint.artificial_variable_index
+        
         for priority in sorted(priority_levels):
                 print(f"\n==== Solving for Priority Level {priority} ====")
                 current_goals = [goal for goal in self.goals if goal.priority == priority]
@@ -254,4 +271,4 @@ class PreemptiveGoalProgramming:
                 var_name = self.tableau_variables[var_idx]
                 solution[var_name] = tableau[row_idx + len(self.goals), -1]
 
-        return solutiong
+        return solution
